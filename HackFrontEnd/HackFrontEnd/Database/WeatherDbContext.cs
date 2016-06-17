@@ -6,13 +6,13 @@ using System.Web;
 
 namespace HackFrontEnd.Database
 {
-    public class WeatherDbContext : DbContext
+    public class WeatherDbContext
     {
         private static WeatherDbContext _context;
-        public DbSet<Agent> Agents { get; set; }
-        public DbSet<PolicyHolder> PolicyHolders { get; set; }
+        public List<Agent> Agents = new List<Agent>();
+        public List<PolicyHolder> PolicyHolders = new List<PolicyHolder>();
 
-        private WeatherDbContext()
+        public WeatherDbContext()
         {
         }
 

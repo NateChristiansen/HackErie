@@ -5,14 +5,152 @@
 }
 
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <title>Weather</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>CAT Notification System</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Custom styles for this template -->
+    <link href="~/Content/styles.css" rel="stylesheet">
+    <script>
+        document._appPath = '@Request.ApplicationPath';
+    </script>
+
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
 </head>
+
 <body>
-<div>
-    <h1>This is our homepage</h1>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" img src="images/logo.png" href="https://www.erieinsurance.com/">Brand</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">HOME <span class="sr-only">(current)</span></a></li>
+                <li><a href="agent.html">Agent</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome, Joe Agent <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div id="map"></div>
+<div class="container">
+    <div class="row">
+        <h2>Do you want to confirm Catastrophe?</h2>
+        <a class="btn btn-default btn-lg green" id="ConfirmButton" role="button">Confirm</a>
+        <a class="btn btn-default btn-lg" href="#" role="button">Deny</a>
+    </div>
+    <br><br>
 </div>
+
+<footer></footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhvOBM779yFsnZpjGtb_Y5auRpfk5IcCI&callback=initMap" async defer></script>
+<script>
+    function initMap() {
+        var myLatLng = { lat: 42.00, lng: -80.00 };
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 10,
+            center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+            position: { lat: 42.10, lng: -80.00 },
+            map: map,
+            title: '1'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 41.95, lng: -80.00 },
+            map: map,
+            title: '2'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 42.00, lng: -80.10 },
+            map: map,
+            title: '3'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 41.98, lng: -80.05 },
+            map: map,
+            title: '4'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 41.99, lng: -80.09 },
+            map: map,
+            title: '5'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 42.05, lng: -80.00 },
+            map: map,
+            title: '6'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 41.95, lng: -80.06 },
+            map: map,
+            title: '7'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 42.02, lng: -80.10 },
+            map: map,
+            title: '8'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 41.88, lng: -80.15 },
+            map: map,
+            title: '9'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 41.99, lng: -80.19 },
+            map: map,
+            title: '10'
+        });
+    }
+</script>
+<script src="~/Scripts/lib/jquery/jquery-2.2.4.min.js"></script>
+<script src="~/Scripts/lib/bootstrap/bootstrap.min.js"></script>
+<script src="~/Scripts/home.js"></script>
 </body>
 </html>

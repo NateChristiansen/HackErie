@@ -11,42 +11,49 @@ namespace HackFrontEnd.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly WeatherDbContext _database = WeatherDbContext.GetContext();
-        // GET: Home
-        public ActionResult Index()
+        private readonly WeatherDbContext _database = new WeatherDbContext
         {
-            if (_database.Agents.Any()) return View();
-            _database.Agents.Add(new Agent
+            Agents = new List<Agent>
             {
-                Email = "natechristiansen42@gmail.com",
-                Firstname = "Nathan",
-                Lastname = "Christiansen"
-            });
-            _database.PolicyHolders.AddRange(new List<PolicyHolder>
+                new Agent
+                {
+                    Email = "natechristiansen42@gmail.com",
+                    Firstname = "Nathan",
+                    Lastname = "Christiansen",
+                    Phone = "8144906855@tmomail.net"
+                }
+            },
+            PolicyHolders = new List<PolicyHolder>
             {
                 new PolicyHolder
                 {
                     Email = "pro585g@gmail.com",
                     Firstname = "Michael",
                     Lastname = "Stumpf",
-                    AgentId = 0
+                    AgentId = 0,
+                    Phone = "7248820177@vtext.com"
                 },
                 new PolicyHolder
                 {
                     Firstname = "Stephen",
                     Lastname = "Caulfield",
                     AgentId = 0,
-                    Email = "stevepc95@gmail.com"
+                    Email = "stevepc95@gmail.com",
+                    Phone = "8148822774@txt.att.net"
                 },
                 new PolicyHolder
                 {
                     Firstname = "Colin",
                     Lastname = "Kimball",
                     AgentId = 0,
-                    Email = "ckimball11@gmail.com"
+                    Email = "ckimball11@gmail.com",
+                    Phone = "8144906405@vtext.com"
                 }
-            });
-            _database.SaveChanges();
+            }
+        };
+        // GET: Home
+        public ActionResult Index()
+        {
             return View();
         }
         
@@ -69,11 +76,19 @@ namespace HackFrontEnd.Controllers
             {
                 foreach (var agent in _database.Agents)
                 {
-                    SendEmail(agent.Email, "Catastrophe Alert", "There is a catastrophe");
+                    SendEmail(agent.Email, "Catastrophe Alert",
+                        "Alert: " + agent.Firstname +
+                        ", we are informing you that a catastrophe is about to strike your area.");
+                    SendEmail(agent.Phone, "Catastrophe Alert",
+                        "Alert: " + agent.Firstname +
+                        ", we are informing you that a catastrophe is about to strike your area.");
                 }
                 foreach (var policyHolder in _database.PolicyHolders)
                 {
                     SendEmail(policyHolder.Email, "Catastrophe Alert",
+                        "Alert: " + policyHolder.Firstname +
+                        ", we are informing you that a catastrophe is about to strike your area.");
+                    SendEmail(policyHolder.Phone, "Catastrophe Alert",
                         "Alert: " + policyHolder.Firstname +
                         ", we are informing you that a catastrophe is about to strike your area.");
                 }

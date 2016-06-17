@@ -12,5 +12,6 @@ namespace HackFrontEnd.Database
         public string Lastname { get; set; }
         public string Email { get; set; }
         public int AgentId { get; set; }
+        public string Phone { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace WeatherReport
         // The response from the remote device.
         private static string _response = string.Empty;
 
-        private static void StartClient()
+        private static void StartClient(string data)
         {
             // Connect to a remote device.
             try
@@ -43,7 +43,7 @@ namespace WeatherReport
                 ConnectDone.WaitOne();
 
                 // Send test data to the remote device.
-                Send(client, "This is a test<EOF>");
+                Send(client, data+"<EOF>");
                 SendDone.WaitOne();
 
                 // Receive the response from the remote device.
@@ -173,7 +173,14 @@ namespace WeatherReport
 
         public WeatherDetector()
         {
-            StartClient();
+            string data = "";
+
+            for (int i = 9; i < 10; i++)
+            {
+                data = i.ToString(); 
+                StartClient(data);
+            }
+           
         }
     }
 }

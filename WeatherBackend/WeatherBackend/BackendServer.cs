@@ -3,6 +3,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.IO;
 
 namespace WeatherBackend
 {
@@ -95,11 +98,27 @@ namespace WeatherBackend
                 var content = state.Sb.ToString();
                 if (content.IndexOf("<EOF>", StringComparison.Ordinal) > -1)
                 {
+                    int Toint;
+                    string value;
+
+                    value = content; 
                     // All the data has been read from the 
-                    // client. Display it on the console.
+                    // client. Display it on the console.\
+
+                    // compare content 
+                    // get first char 
+                    Toint = int.Parse(value.Replace("<EOF>","")); 
+                    Console.Write(Toint.ToString());
+
+                    //compare int
+
+                    /*
                     Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                         content.Length, content);
                     // Echo the data back to the client.
+                     * */
+                     sendRequest(Toint);
+
                     Send(handler, content);
                 }
                 else
@@ -141,9 +160,53 @@ namespace WeatherBackend
                 Console.WriteLine(e.ToString());
             }
         }
+
         public BackendServer()
         {
             StartListening();
         }
+
+        //mikes shitty little function 
+        private static void sendRequest(int rating)
+        {
+            
+            if (rating >= 8)
+            {
+                
+                WebRequest request = WebRequest.Create("http://localhost:27039/home/potentialcat");
+                request.Method = "POST";
+                // Create POST data and convert it to a byte array.
+                string postData = "";
+                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+                // Set the ContentType property of the WebRequest.
+                request.ContentType = "application/x-www-form-urlencoded";
+                // Set the ContentLength property of the WebRequest.
+                request.ContentLength = byteArray.Length;
+                // Get the request stream.
+                Stream dataStream = request.GetRequestStream();
+                // Write the data to the request stream.
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                // Close the Stream object.
+                dataStream.Close();
+                // Get the response.
+                WebResponse response = request.GetResponse();
+                // Display the status.
+                Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+                // Get the stream containing content returned by the server.
+                dataStream = response.GetResponseStream();
+                // Open the stream using a StreamReader for easy access.
+                StreamReader reader = new StreamReader(dataStream);
+                // Read the content.
+                string responseFromServer = reader.ReadToEnd();
+                // Display the content.
+                Console.WriteLine(responseFromServer);
+                // Clean up the streams.
+                reader.Close();
+                dataStream.Close();
+                response.Close();
+            }
+        
+        }
+
     }
 }
