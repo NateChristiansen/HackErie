@@ -21,3 +21,8 @@ a.list-group-item, button.list-group-item {
 	background-color: green;
 	color: white;
 }
+
+.align-right {
+	
+	float:right;
+}

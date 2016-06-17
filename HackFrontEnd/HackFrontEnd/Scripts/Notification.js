@@ -1,6 +1,6 @@
 ﻿$(document).ready(function() {
     function sendAlerts() {
-        $.post(document._appPath + "home/confirmed", function(data) {
+        $.post(document._appPath + "notification/confirmed", function(data) {
             alert(data);
         });
     }

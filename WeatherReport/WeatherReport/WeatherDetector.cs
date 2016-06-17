@@ -50,9 +50,6 @@ namespace WeatherReport
                 Receive(client);
                 ReceiveDone.WaitOne();
 
-                // Write the response to the console.
-                Console.WriteLine("Response received : {0}", _response);
-
                 // Release the socket.
                 client.Shutdown(SocketShutdown.Both);
                 client.Close();
@@ -73,9 +70,6 @@ namespace WeatherReport
 
                 // Complete the connection.
                 client.EndConnect(ar);
-
-                Console.WriteLine("Socket connected to {0}",
-                    client.RemoteEndPoint);
 
                 // Signal that the connection has been made.
                 ConnectDone.Set();
@@ -159,8 +153,7 @@ namespace WeatherReport
                 var client = (Socket)ar.AsyncState;
 
                 // Complete sending the data to the remote device.
-                var bytesSent = client.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to server.", bytesSent);
+                client.EndSend(ar);
 
                 // Signal that all bytes have been sent.
                 SendDone.Set();
@@ -173,14 +166,11 @@ namespace WeatherReport
 
         public WeatherDetector()
         {
-            string data = "";
-
-            for (int i = 9; i < 10; i++)
+            for (var i = 9; i < 10; i++)
             {
-                data = i.ToString(); 
+                var data = i.ToString();
                 StartClient(data);
             }
-           
         }
     }
 }

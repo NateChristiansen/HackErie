@@ -12,7 +12,7 @@ namespace WeatherBackend
     internal class BackendServer
     {
         public static ManualResetEvent AllDone = new ManualResetEvent(false);
-        
+
 
         public static void StartListening()
         {
@@ -42,7 +42,6 @@ namespace WeatherBackend
                     AllDone.Reset();
 
                     // Start an asynchronous socket to listen for connections.
-                    Console.WriteLine("Waiting for a connection...");
                     listener.BeginAccept(
                         AcceptCallback,
                         listener);
@@ -68,7 +67,7 @@ namespace WeatherBackend
             AllDone.Set();
 
             // Get the socket that handles the client request.
-            var listener = (Socket)ar.AsyncState;
+            var listener = (Socket) ar.AsyncState;
             var handler = listener.EndAccept(ar);
 
             // Create the state object.
@@ -81,52 +80,39 @@ namespace WeatherBackend
         {
             // Retrieve the state object and the handler socket
             // from the asynchronous state object.
-            var state = (StateObject)ar.AsyncState;
+            var state = (StateObject) ar.AsyncState;
             var handler = state.WorkSocket;
 
             // Read data from the client socket. 
             var bytesRead = handler.EndReceive(ar);
 
-            if (bytesRead > 0)
+            if (bytesRead <= 0) return;
+            // There  might be more data, so store the data received so far.
+            state.Sb.Append(Encoding.ASCII.GetString(
+                state.Buffer, 0, bytesRead));
+
+            // Check for end-of-file tag. If it is not there, read 
+            // more data.
+            var content = state.Sb.ToString();
+            if (content.IndexOf("<EOF>", StringComparison.Ordinal) > -1)
             {
-                // There  might be more data, so store the data received so far.
-                state.Sb.Append(Encoding.ASCII.GetString(
-                    state.Buffer, 0, bytesRead));
+                var value = content;
+                // All the data has been read from the 
+                // client. Display it on the console.\
 
-                // Check for end-of-file tag. If it is not there, read 
-                // more data.
-                var content = state.Sb.ToString();
-                if (content.IndexOf("<EOF>", StringComparison.Ordinal) > -1)
-                {
-                    int Toint;
-                    string value;
+                // compare content 
+                // get first char 
+                var toint = int.Parse(value.Replace("<EOF>", ""));
+                
+                SendRequest(toint);
 
-                    value = content; 
-                    // All the data has been read from the 
-                    // client. Display it on the console.\
-
-                    // compare content 
-                    // get first char 
-                    Toint = int.Parse(value.Replace("<EOF>","")); 
-                    Console.Write(Toint.ToString());
-
-                    //compare int
-
-                    /*
-                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
-                        content.Length, content);
-                    // Echo the data back to the client.
-                     * */
-                     sendRequest(Toint);
-
-                    Send(handler, content);
-                }
-                else
-                {
-                    // Not all data received. Get more.
-                    handler.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0,
+                Send(handler, content);
+            }
+            else
+            {
+                // Not all data received. Get more.
+                handler.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0,
                     ReadCallback, state);
-                }
             }
         }
 
@@ -145,11 +131,10 @@ namespace WeatherBackend
             try
             {
                 // Retrieve the socket from the state object.
-                var handler = (Socket)ar.AsyncState;
+                var handler = (Socket) ar.AsyncState;
 
                 // Complete sending the data to the remote device.
-                var bytesSent = handler.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to client.", bytesSent);
+                handler.EndSend(ar);
 
                 handler.Shutdown(SocketShutdown.Both);
                 handler.Close();
@@ -167,46 +152,36 @@ namespace WeatherBackend
         }
 
         //mikes shitty little function 
-        private static void sendRequest(int rating)
+        private static void SendRequest(int rating)
         {
-            
-            if (rating >= 8)
-            {
-                
-                WebRequest request = WebRequest.Create("http://localhost:27039/home/potentialcat");
-                request.Method = "POST";
-                // Create POST data and convert it to a byte array.
-                string postData = "";
-                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-                // Set the ContentType property of the WebRequest.
-                request.ContentType = "application/x-www-form-urlencoded";
-                // Set the ContentLength property of the WebRequest.
-                request.ContentLength = byteArray.Length;
-                // Get the request stream.
-                Stream dataStream = request.GetRequestStream();
-                // Write the data to the request stream.
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                // Close the Stream object.
-                dataStream.Close();
-                // Get the response.
-                WebResponse response = request.GetResponse();
-                // Display the status.
-                Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-                // Get the stream containing content returned by the server.
-                dataStream = response.GetResponseStream();
-                // Open the stream using a StreamReader for easy access.
-                StreamReader reader = new StreamReader(dataStream);
-                // Read the content.
-                string responseFromServer = reader.ReadToEnd();
-                // Display the content.
-                Console.WriteLine(responseFromServer);
-                // Clean up the streams.
-                reader.Close();
-                dataStream.Close();
-                response.Close();
-            }
-        
+            if (rating < 8) return;
+            var request = WebRequest.Create("http://localhost:27039/notification/potentialcat");
+            request.Method = "POST";
+            // Create POST data and convert it to a byte array.
+            var byteArray = Encoding.UTF8.GetBytes(string.Empty);
+            // Set the ContentType property of the WebRequest.
+            request.ContentType = "application/x-www-form-urlencoded";
+            // Set the ContentLength property of the WebRequest.
+            request.ContentLength = byteArray.Length;
+            // Get the request stream.
+            var dataStream = request.GetRequestStream();
+            // Write the data to the request stream.
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            // Close the Stream object.
+            dataStream.Close();
+            // Get the response.
+            var response = request.GetResponse();
+            // Display the status.
+            // Get the stream containing content returned by the server.
+            // Open the stream using a StreamReader for easy access.
+            var reader = new StreamReader(response.GetResponseStream());
+            // Read the content.
+            reader.ReadToEnd();
+            // Display the content.
+            // Clean up the streams.
+            reader.Close();
+            dataStream.Close();
+            response.Close();
         }
-
     }
 }

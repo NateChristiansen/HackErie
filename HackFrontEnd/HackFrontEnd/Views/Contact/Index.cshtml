@@ -1,0 +1,220 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CAT Notification System</title>
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+    <link href="~/Content/styles.css" rel="stylesheet">
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+    <script>
+        document._appPath = '@Request.ApplicationPath';
+    </script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">ERIE Insurance</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li class="active">@Html.ActionLink("Agent", "Index", "Agent")</li>
+                <li>@Html.ActionLink("CAT Van", "Index", "CatVan")</li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome, Joe Agent <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+<div class="container">
+    <div class="row">
+        <h2>Location of effected Policyholders</h2>
+    </div>
+</div>
+<div id="map"></div>
+<div class="container">
+    <div class="row">
+        <h2>Policyholder contact information</h2>
+
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Row</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>John</td>
+                <td>Carter</td>
+                <td>johncarter@mail.com</td>
+                <td>814-490-1234 <a href="#" class="btn btn-default green">Call Now</a></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Peter</td>
+                <td>Parker</td>
+                <td>peterparker@mail.com</td>
+                <td>814-490-1234 <a href="#" class="btn btn-default green">Call Now</a></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>John</td>
+                <td>Rambo</td>
+                <td>johnrambo@mail.com</td>
+                <td>814-490-1234 <a href="#" class="btn btn-default green">Call Now</a></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>John</td>
+                <td>Rambo</td>
+                <td>johnrambo@mail.com</td>
+                <td>814-490-1234 <a href="#" class="btn btn-default green">Call Now</a></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>John</td>
+                <td>Rambo</td>
+                <td>johnrambo@mail.com</td>
+                <td>814-490-1234 <a href="#" class="btn btn-default green">Call Now</a></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>John</td>
+                <td>Rambo</td>
+                <td>johnrambo@mail.com</td>
+                <td>814-490-1234 <a href="#" class="btn btn-default green">Call Now</a></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>John</td>
+                <td>Rambo</td>
+                <td>johnrambo@mail.com</td>
+                <td>814-490-1234 <a href="#" class="btn btn-default green">Call Now</a></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>John</td>
+                <td>Rambo</td>
+                <td>johnrambo@mail.com</td>
+                <td>814-490-1234 <a href="#" class="btn btn-default green">Call Now</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <br>
+
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhvOBM779yFsnZpjGtb_Y5auRpfk5IcCI&callback=initMap" async defer></script>
+<script>
+    function initMap() {
+        var myLatLng = { lat: 42.00, lng: -80.00 };
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 10,
+            center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+            position: { lat: 42.10, lng: -80.00 },
+            map: map,
+            title: '1'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 41.95, lng: -80.00 },
+            map: map,
+            title: '2'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 42.00, lng: -80.10 },
+            map: map,
+            title: '3'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 41.98, lng: -80.05 },
+            map: map,
+            title: '4'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 41.99, lng: -80.09 },
+            map: map,
+            title: '5'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 42.05, lng: -80.00 },
+            map: map,
+            title: '6'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 41.95, lng: -80.06 },
+            map: map,
+            title: '7'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 42.02, lng: -80.10 },
+            map: map,
+            title: '8'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 41.88, lng: -80.15 },
+            map: map,
+            title: '9'
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 41.99, lng: -80.19 },
+            map: map,
+            title: '10'
+        });
+    }
+</script>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="~/Scripts/lib/jquery/jquery-2.2.4.js"></script>
+<script src="~/Scripts/lib/bootstrap/bootstrap.js"></script>
+</body>
+</html>

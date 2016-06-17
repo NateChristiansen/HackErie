@@ -101,6 +101,12 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\erielogo-white-aboveall.svg" />
+    <Content Include="Content\Images\footprint_weather.png" />
+    <Content Include="Content\Images\policyholder_map.png" />
+    <Content Include="Content\Images\radar.jpg" />
+    <Content Include="Content\Images\storm.jpg" />
+    <Content Include="Content\Images\weather.png" />
     <Content Include="Content\styles.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -108,21 +114,26 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
     <None Include="Scripts\lib\jquery\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\lib\bootstrap\bootstrap.js" />
     <Content Include="Scripts\lib\bootstrap\bootstrap.min.js" />
-    <Content Include="Scripts\home.js" />
+    <Content Include="Scripts\Notification.js" />
     <Content Include="Scripts\lib\jquery\jquery-2.2.4.js" />
     <Content Include="Scripts\lib\jquery\jquery-2.2.4.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AgentController.cs" />
+    <Compile Include="Controllers\CatVanController.cs" />
+    <Compile Include="Controllers\ConfirmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Database\Agent.cs" />
     <Compile Include="Database\PolicyHolder.cs" />
     <Compile Include="Database\WeatherDbContext.cs" />
@@ -136,6 +147,11 @@
     <Content Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\lib\jquery\jquery-2.2.4.min.map" />
+    <None Include="Views\Agent\Index.cshtml" />
+    <None Include="Views\CatVan\Index.cshtml" />
+    <None Include="Views\Confirm\Index.cshtml" />
+    <None Include="Views\Notification\Index.cshtml" />
+    <None Include="Views\Contact\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -144,7 +160,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>

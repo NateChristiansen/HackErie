@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +37,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Agent","Index", "Agent")</li>
+                <li>@Html.ActionLink("Agent", "Index", "Agent")</li>
                 <li>@Html.ActionLink("CAT Van", "Index", "CatVan")</li>
             </ul>
 
@@ -56,11 +57,12 @@
     </div><!-- /.container-fluid -->
 </nav>
 
-<div class="alert alert-danger" role="alert">
+<div class="alert alert-success" role="alert">
     <div class="container">
-        <h4><span class="glyphicon glyphicon-warning-sign"></span> <b>WARNING: Possible weather catastrophe has been detected! Click @Html.ActionLink("here", "Index", "Notification") to confirm.</b> <span class="glyphicon glyphicon-remove align-right"></span></h4>
+        <h4><span class="glyphicon glyphicon-check"></span> <b>Notifications have been sent! <span class=" glyphicon glyphicon-remove align-right"></span></b></h4>
     </div>
 </div>
+
 
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron  header-section">
