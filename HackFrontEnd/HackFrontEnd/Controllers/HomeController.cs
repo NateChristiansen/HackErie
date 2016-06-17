@@ -18,30 +18,25 @@ namespace HackFrontEnd.Controllers
         
         public ActionResult PotentialCat()
         {
-            var fromAddress = new MailAddress("from@gmail.com", "From Name");
-            var toAddress = new MailAddress("to@example.com", "To Name");
-            const string fromPassword = "fromPassword";
-            const string subject = "Subject";
-            const string body = "Body";
-
-            var smtp = new SmtpClient
+            try
             {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-            };
-            using (var message = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = subject,
-                Body = body
-            })
-            {
-                smtp.Send(message);
+                var smptClient = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    Credentials = new NetworkCredential("hackerie1234@gmail.com", "hackable"),
+                    EnableSsl = true
+                };
+                smptClient.Send("hackerie1234@gmail.com", "natechristiansen42@gmail.com", "Testing Email", "testing the email");
             }
-            return Json("Hit the deck!", JsonRequestBehavior.AllowGet);
+            catch (Exception)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult AlertEveryone()
+        {
+            return Json(null);
         }
     }
 }
